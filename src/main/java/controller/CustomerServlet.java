@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.Date;
 import java.util.List;
 
 @WebServlet(urlPatterns = "/customer")
@@ -29,28 +30,25 @@ public class CustomerServlet extends HttpServlet {
                 request.setAttribute("customer", customerList);
                 request.getRequestDispatcher("createCustomer.jsp").forward(request, response);
                 break;
-            default:response.sendRedirect("/login.jsp");
-//            case "edit":
-//                customerList = customerService.getList();
-//                request.setAttribute("customer", customerList);
-//                request.getRequestDispatcher("editCustomer.jsp").forward(request, response);
-//                break;
-//            case "delete":
-//                try {
-//                    deleteCustomer(request, response);
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//                break;
-//            default:
-//                showList(request, response);
+            case "edit":
+            customerList = customerService.getList();
+               request.setAttribute("customer", customerList);
+               request.getRequestDispatcher("editCustomer.jsp").forward(request, response);
+                break;
+            case "delete":
+               int id = Integer.parseInt(request.getParameter("id"));
+                customerService.delete(id) ;
+                response.sendRedirect("/home.jsp");
+                break;
+            default:
+                requestDispatcher = request.getRequestDispatcher("/home.jsp");
+                requestDispatcher.forward(request, response);
         }
 
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println(" in post ");
         String action = request.getParameter("action");
         if (action == null) {
             action = "";
@@ -59,16 +57,20 @@ public class CustomerServlet extends HttpServlet {
             case "login":
                 String user = request.getParameter("userName");
                 String password = request.getParameter("password");
-                System.out.println("di den day");
                 Customer customer = customerService.checkLoginCustomer(user,password);
                 if(customer == null){
                     response.sendRedirect("/login.jsp");
                 }else {
-                    System.out.println("Login success ");
                     request.getRequestDispatcher("/home.jsp").forward(request,response);
                 }
                 break;
-            default: response.sendRedirect("/cart.html");
+            case "register":
+                String email = request.getParameter("email");
+                String passwords = request.getParameter("password");
+                request.setAttribute("customer", customerService.getList());
+                request.getRequestDispatcher("createCustomer.jsp").forward(request, response);
+                break;
+            default: response.sendRedirect("/home.jsp");
         }
     }
 }

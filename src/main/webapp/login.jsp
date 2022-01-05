@@ -22,7 +22,7 @@
             <nav>
                 <ul id="MenuItems">
                     <li><a href="index.html">Home</a></li>
-                    <li><a href="products.html">Products</a></li>
+                    <li><a href="products.jsp">Products</a></li>
                     <li><a href="">About</a></li>
                     <li><a href="">Contact</a></li>
                     <li><a href="login.jsp">Account</a></li>
@@ -56,10 +56,10 @@
                             <a href="">Forgot password</a>
                         </form>
 
-                        <form id="RegForm">
+                        <form id="RegForm" action="/customer" method="post">
                             <input type="text" placeholder="Username">
-                            <input type="email" placeholder="Email">
-                            <input type="password" placeholder="Password">
+                            <input type="email" name="email" placeholder="Email">
+                            <input type="password"  name="passwords" placeholder="Password">
                             <button type="submit" class="btn">Register</button>
                         </form>
 

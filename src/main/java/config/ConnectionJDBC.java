@@ -7,9 +7,10 @@ import java.sql.SQLException;
 public class ConnectionJDBC {
     private static String url = "jdbc:mysql://localhost:3306/product_manager";
     private static String user = "root";
-    private static String password = "mylove99";
-    public static Connection getConnection(){
-        Connection connection=null;
+    private static String password = "mothaiba123.";
+
+    public static Connection getConnection() {
+        Connection connection = null;
         try {
             Class.forName("com.mysql.jdbc.Driver");
             connection = DriverManager.getConnection(url,
